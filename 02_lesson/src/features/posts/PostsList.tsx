@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux'
-import type { RootStore } from '../../app/store'
+import { selectAllPosts } from './postsSlice'
 
 const PostsList = () => {
-	const posts = useSelector((state: RootStore) => state.posts)
+	const posts = useSelector(selectAllPosts)
 
 	return (
 		<>
