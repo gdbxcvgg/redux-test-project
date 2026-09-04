@@ -1,19 +1,26 @@
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { createPost } from './postsSlice'
 import { useState } from 'react'
+import { selectAllUsers } from '../users/usersSlice'
 
 const PostForm = () => {
 	const dispatch = useDispatch()
 
+	const users = useSelector(selectAllUsers)
+
 	const [title, setTitle] = useState('')
 	const [description, setDescription] = useState('')
+	const [userId, setUserId] = useState('')
+
+	const isPostValid = !!userId && !!title && !!description
 
 	const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		dispatch(createPost(title, description))
+		dispatch(createPost(title, description, userId))
 
 		setTitle('')
 		setDescription('')
+		setUserId('')
 	}
 
 	return (
@@ -38,7 +45,17 @@ const PostForm = () => {
 				/>
 			</div>
 
-			<input type="submit" value="Create Post" />
+			<div>
+				<label htmlFor="author">Author:</label>
+				<select onChange={(e) => setUserId(e.target.value)} value={userId}>
+					<option value="">-</option>
+					{users.map((user) => (
+						<option value={user.id}>{user.displayName}</option>
+					))}
+				</select>
+			</div>
+
+			<input type="submit" value="Create Post" disabled={!isPostValid} />
 		</form>
 	)
 }

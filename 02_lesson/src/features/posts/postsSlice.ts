@@ -1,10 +1,11 @@
 import { createSlice, nanoid, type PayloadAction } from '@reduxjs/toolkit'
 import type { RootStore } from '../../app/store'
 
-type Post = {
+export type Post = {
 	id: string
 	title: string
 	description: string
+	authorId?: string
 }
 
 const initialState: Post[] = [
@@ -28,12 +29,13 @@ const postsSlice = createSlice({
 			reducer: (state: Post[], action: PayloadAction<Post>) => {
 				state.push(action.payload)
 			},
-			prepare: (title: string, description: string) => {
+			prepare: (title: string, description: string, authorId: string) => {
 				return {
 					payload: {
 						id: nanoid(),
 						title,
 						description,
+						authorId,
 					},
 				}
 			},

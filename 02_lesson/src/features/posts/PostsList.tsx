@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux'
 import { selectAllPosts } from './postsSlice'
+import Post from './Post'
 
 const PostsList = () => {
 	const posts = useSelector(selectAllPosts)
@@ -7,10 +8,7 @@ const PostsList = () => {
 	return (
 		<>
 			{posts.map((post) => (
-				<article key={post.id}>
-					<h2 style={{ marginBottom: 4 }}>{post.title}</h2>
-					<p style={{ margin: 0 }}>{post.description}</p>
-				</article>
+				<Post post={post} />
 			))}
 		</>
 	)

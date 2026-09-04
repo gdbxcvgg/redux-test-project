@@ -40,6 +40,8 @@ const usersSlice = createSlice({
 })
 
 export const selectAllUsers = (state: RootStore) => state.users
+export const selectUserById = (state: RootStore, id?: string) =>
+	state.users.find((u) => u.id === id)
 
 export const { addUser } = usersSlice.actions
 
